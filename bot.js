@@ -78,18 +78,23 @@ function saySomething() {
 		var match = matchPattern(rules[i].pattern, words, 0, 0)
 		
 		if (match) {
-			// Reconstruct a reply - if a token is a number, find the
-			// matched word from 'match', otherwise just append the word
-			var res = ""
-  
-			for(var token of rules[i].reply) {
-			
-				if (typeof(token) == "number") res += match[token]
-				else res += token;
-			}
-			answer = res;
+			answer = reply(match);
 		}
 	}
 	conversation.innerHTML += "<p><strong>You:</strong> " + message + "</p>";
     conversation.innerHTML += "<p><strong>Eliza:</strong> " + answer + "</p>";
+}
+
+function reply(message) {
+	// Reconstruct a reply - if a token is a number, find the
+	// matched word from 'match', otherwise just append the word
+	var answer = ""
+  
+	for(var token of rules[i].reply) {
+			
+		if (typeof(token) == "number") answer += match[token]
+		else answer += token;
+	}
+	
+	return answer;
 }
